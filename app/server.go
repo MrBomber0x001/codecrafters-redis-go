@@ -30,10 +30,12 @@ func main() {
 
 	buff := make([]byte, 1024)
 
-	if _, err := conn.Read(buff); err != nil {
-		fmt.Println("erro reading from client", err.Error())
-		os.Exit(1)
+	for {
+		if _, err := conn.Read(buff); err != nil {
+			fmt.Println("erro reading from client", err.Error())
+			os.Exit(1)
+		}
+		conn.Write([]byte("+PONG\r\n"))
 	}
 
-	conn.Write([]byte("+PONG\r\n"))
 }
